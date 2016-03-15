@@ -1,0 +1,39 @@
+<apex:page standardController="Account" extensions="DisplayAccounts" >
+<center><apex:image url="{!$Resource.VF_Assignment_Header_Image}" width="50" height="50"/></center>   
+
+  
+     <apex:form id="Myform">
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="1">
+                <apex:outputText value="Search :      "></apex:outputText>
+                <apex:inputText id="search" value="{!searchTerm}"/> 
+                <apex:commandButton value="Search" action="{!search}" reRender="pgBlk"/>
+            </apex:pageBlockSection>    
+        </apex:pageBlock>
+                <br/><br/>
+          
+               <apex:pageBlock id="pgBlk">
+                
+                    <apex:pageBlockTable value="{!accList}" var="eachAccount">
+                          <apex:column headerValue="Name">    <apex:commandLink action="/{!eachAccount.id}" value="{!eachAccount.Name}"/></apex:column>
+                          <apex:column value="{!eachAccount.Person_Email__c}"/>
+                          <apex:column value="{!eachAccount.Phone}"/>
+                          <apex:column value="{!eachAccount.Website}"/>
+                          
+                          <apex:column headerValue="Manage Contacts">
+                              <apex:commandButton value="Manage Contacts" action="{!showContacts}" reRender="Myform">
+                              <apex:param assignTo="{!accId}" value="{!eachAccount.Id}" name="accid"/>
+                              </apex:commandButton>
+                          </apex:column>
+                    
+                    </apex:pageBlockTable>  
+                    <c:Count_of_Records RecordCount="{!noOfAccounts}"></c:Count_of_Records>
+                </apex:pageBlock>
+                 
+         
+    </apex:form>
+<script>
+
+</script>   
+
+</apex:page>

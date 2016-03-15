@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
+    <cacheControl>Public</cacheControl>
+    <contentType>image/jpeg</contentType>
+    <description>5. Get an image for the header of your page. Add that image to the static resources. Add the header to the page.</description>
+</StaticResource>

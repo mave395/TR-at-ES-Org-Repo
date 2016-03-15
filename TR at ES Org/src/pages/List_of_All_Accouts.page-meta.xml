@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>36.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>The accounts manager should be able to view a list of all the accounts present in my organization. Develop a VF page for the same. The columns that should be present on the page are:
+a. Account Name
+b. Email address
+c. Phone number
+d. Website
+e. A button named “Manage Contacts”</description>
+    <label>List of All Accouts</label>
+    <packageVersions>
+        <majorNumber>1</majorNumber>
+        <minorNumber>7</minorNumber>
+        <namespace>sf_com_apps</namespace>
+    </packageVersions>
+</ApexPage>

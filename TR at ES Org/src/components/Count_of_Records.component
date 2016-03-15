@@ -1,0 +1,4 @@
+<apex:component >
+<apex:attribute name="RecordCount" type="Integer" required="true" description="Shows the number of records on the page"/>
+<apex:outputText >Record count : {!RecordCount}</apex:outputText>
+</apex:component>

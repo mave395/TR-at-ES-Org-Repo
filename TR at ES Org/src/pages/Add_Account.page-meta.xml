@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>36.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>1. The accounts manager should be able to add new accounts to my organization through a custom VF page. The page should include the account name and the account email as required fields. Create a save and a cancel button as well. On clicking the save button, the record should be saved, whereas the user should be redirected to the Accounts list view on clicking the cancel button.</description>
+    <label>Add Account</label>
+    <packageVersions>
+        <majorNumber>1</majorNumber>
+        <minorNumber>7</minorNumber>
+        <namespace>sf_com_apps</namespace>
+    </packageVersions>
+</ApexPage>
