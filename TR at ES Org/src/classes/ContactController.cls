@@ -1,11 +1,13 @@
-public class ContactController{
+//This class displays the related contacts of the Account using the AccountId from the query string.
+
+global class ContactController{
 
     public String contactToBeDeleted {get;set;}
     
     public String getClickedAccount() {
         return null;
     }
-    private List<Account> selectAccount;
+    public List<Account> selectAccount;
     
     public String accountName{get;set;}
     
@@ -27,6 +29,7 @@ public class ContactController{
 
 
             
+    //Initialize all the contacts for the particular account (id extracted from query string).
       
     public ContactController() {        
         
@@ -43,6 +46,8 @@ public class ContactController{
         
     }
     
+    //Deleting All Contacts being diaplayed on the page.
+    
     public PageReference deleteContacts (){
         if(!accRelatedContacts.isEmpty()){
             delete accRelatedContacts;
@@ -50,12 +55,15 @@ public class ContactController{
         return new PageReference('/apex/List_of_All_Accouts'); 
     }
     
+    //Deleting single contact for the corresponding button being clicked.
     public void deleteContact(){
         List<Contact> lstContactDelete = [select id from Contact where id = :contactToBeDeleted];
         //delete lstContactDelete;
         accRelatedContacts = [SELECT Id,Name,Email,Phone FROM Contact where AccountId = : accId ];
         noOfContacts = accRelatedContacts.size();
     }
+    
+    //Populate the Contact list depending on the alphabet clicked for alphabetical search functionality.
     
     public PageReference display() {
         
@@ -76,5 +84,11 @@ public class ContactController{
         return null;
     }
     
-    
+    @RemoteAction
+    global static String remotelyDeleteContact(ID conId){
+                List<Contact> delOneCon = [select id,name from Contact where id = :conId];
+                String nameOfTheDeletedContact = delOneCon [0].Name;
+                delete delOneCon;
+                return nameOfTheDeletedContact; 
+    }
 }

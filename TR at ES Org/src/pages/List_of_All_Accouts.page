@@ -4,12 +4,17 @@
   
      <apex:form id="Myform">
         <apex:pageBlock >
-            <apex:pageBlockSection columns="1">
+            <apex:pageBlockSection columns="2">
                 <apex:outputText value="Search :      "></apex:outputText>
-                <apex:inputText id="search" value="{!searchTerm}"/> 
-                <apex:commandButton value="Search" action="{!search}" reRender="pgBlk"/>
+                <apex:pageBlockSectionItem >                    
+                    <apex:inputText id="search" value="{!searchTerm}" onkeypress="return searchOnEnter(event);"/>  
+                    <apex:outputText rendered="{!boolSrchError}" value="{!searchError}"></apex:outputText>
+                </apex:pageBlockSectionItem>
+                <apex:commandButton value="Search" action="{!search}" reRender="Myform"/>
+                <apex:commandButton value="Clear" action="{!clear}"/>
             </apex:pageBlockSection>    
         </apex:pageBlock>
+        <apex:actionFunction name="doSearchAF" action="{!search}" reRender="Myform"/>
                 <br/><br/>
           
                <apex:pageBlock id="pgBlk">
@@ -33,7 +38,14 @@
          
     </apex:form>
 <script>
-
+function searchOnEnter(ev){
+if (window.event && window.event.keyCode == 13 || ev.which == 13) {
+                doSearchAF();
+            return false;
+         } else {
+              return true;
+         }
+}
 </script>   
 
 </apex:page>

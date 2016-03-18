@@ -1,30 +1,32 @@
 <apex:page controller="ContactController">
             
     <apex:form id="contacts">    
+    <apex:actionFunction name="callDisplay"  action="{!display}" reRender="contacts">
+        <apex:param value="" name="SearchVar" assignTo="{!SearchVar}"/>
+    </apex:actionFunction>
     <table>
                 <tr>
                 <apex:repeat value="{!SerchAlpabet}" var="eachChar">
                     <td>
-                        <apex:commandLink onclick="callDisplay();return false;">
-                            <apex:param value="{!eachChar}" name="ech_chr"  assignTo="{!SearchVar}"/> {!eachChar}
-                        </apex:commandLink>
+                        <apex:outputLink onclick="display('{!eachChar}'); return false;">
+                             {!eachChar}
+                        </apex:outputLink>
                     </td>
                     </apex:repeat>
                 </tr>    
     </table>
-    <apex:actionFunction name="callDisplay"  action="{!display}" reRender="pbId"/>
+    
     
     
     <apex:pageBlock title="Contacts Of The Following Account : {!accountName}" id="pbId">
-         <apex:pageBlockTable value="{!accRelatedContacts}" var="eachContact"  >
+         <apex:pageBlockTable value="{!accRelatedContacts}" var="eachContact" headerClass="{!accountName}" >
         
         <apex:column value="{!eachContact.Name}"/>
         <apex:column value="{!eachContact.Email}"/>
         <apex:column value="{!eachContact.Phone}"/>
         
         <apex:column headerValue="Delete Contact">
-            <apex:commandButton value="Delete" action="{!deleteContact}" reRender="contacts" oncomplete="alert('Contact has been deleted !!!');">
-                <apex:param assignTo="{!contactToBeDeleted}" value="{!eachContact.id}" name="contid"/>
+            <apex:commandButton onclick="deleteConatct('{!eachContact.Id}');return false;" value="Delete" reRender="contacts" oncomplete="alert('Contact has been deleted !!!');">
             </apex:commandButton>
         </apex:column>
     </apex:pageBlockTable>
@@ -34,56 +36,32 @@
     <apex:commandButton value="Delete All" action="{!deleteContacts}"/><br/>
     <c:Count_of_Records RecordCount="{!noOfContacts}"></c:Count_of_Records>
     </apex:form>
-    
-<script>
-function display(){
-//alert ("Js is running");
-callDisplay();
-}
-</script>    
-</apex:page>
+    <!--
+<apex:includeScript value="{!URLFOR($Resource.RemotingScriptForAccountRelatedContacts,'/RemotingDemo.js')}"/> -->
 
-<!--
-<apex:page controller="ContactController">
-    
-    
-    
-    <apex:form id="contacts">
-    
-    <table>
-                <tr>
-                <apex:repeat value="{!SerchAlpabet}" var="eachChar">
-                    <td><apex:commandLink action="{!display}" reRender="contacts"><apex:param value="{!eachChar}" name="ech_chr"  assignTo="{!SearchVar}"/> {!eachChar}</apex:commandLink></td>
-                    </apex:repeat>
-                </tr>
-    </table>
-    
-    
-    
-    <apex:pageBlock title="Contacts Of The Following Account : {!accountName}">
-         <apex:pageBlockTable value="{!accRelatedContacts}" var="eachContact" >
-        
-        <apex:column value="{!eachContact.Name}"/>
-        <apex:column value="{!eachContact.Email}"/>
-        <apex:column value="{!eachContact.Phone}"/>
-        
-        <apex:column headerValue="Delete Contact">
-            <apex:commandButton value="Delete" action="{!deleteContact}" reRender="contacts" oncomplete="alert('Contact has been deleted !!!');">
-                <apex:param assignTo="{!contactToBeDeleted}" value="{!eachContact.id}" name="contid"/>
-            </apex:commandButton>
-        </apex:column>
-    </apex:pageBlockTable>
-    </apex:pageBlock>
-    
-    <apex:commandButton value="Return" action="/apex/List_of_All_Accouts"/>
-    <apex:commandButton value="Delete All" action="{!deleteContacts}"/><br/>
-    <c:Count_of_Records RecordCount="{!noOfContacts}"></c:Count_of_Records>
-    </apex:form>
-    
 <script>
-function display(){
-callDisplay();
+function display(temp){
+    callDisplay(temp);
 }
-</script>    
+
+
+function deleteConatct(conId){
+    Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.ContactController.remotelyDeleteContact}',
+    conId,
+    function(result, event){
+                if (event.status) {
+                    var deletedContactName = result;
+                    //alert('Name of the Deleted Contact is : '+ deletedContactName );
+                    location.reload();
+                } else if (event.type === 'exception') {
+                    
+                } else {
+                    
+                }
+    }
+    ,{escape: true}
+);
+
+}
+</script>  
 </apex:page>
--->
